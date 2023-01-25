@@ -7,7 +7,6 @@ import { ProductCategory } from './entities/product-category.entity';
 @Controller('product-category')
 export class ProductCategoryController {
   constructor(private readonly productCategoryService: ProductCategoryService) {
-    console.log(process.env.DB_HOST);
   }
 
   @Post()
