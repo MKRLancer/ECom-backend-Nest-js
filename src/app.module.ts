@@ -6,6 +6,7 @@ import { ProductCategoryModule } from './product-category/product-category.modul
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { databaseConfig } from './config/database.config';
+import { S3Service } from './common/s3/s3.service';
 
 @Module({
   imports: [
@@ -15,6 +16,6 @@ import { databaseConfig } from './config/database.config';
     ProductCategoryModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, S3Service],
 })
 export class AppModule { }
