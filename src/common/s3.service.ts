@@ -19,6 +19,10 @@ export class S3Service {
         };
     }
 
+    async deleteS3Resource(key:string,){
+        
+    }
+
     getS3Bucket() {
         return new S3({
             accessKeyId: process.env.AWS_ACCESS_KEY,

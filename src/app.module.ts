@@ -6,7 +6,7 @@ import { ProductCategoryModule } from './product-category/product-category.modul
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { databaseConfig } from './config/database.config';
-import { S3Service } from './common/s3/s3.service';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -14,8 +14,9 @@ import { S3Service } from './common/s3/s3.service';
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync(databaseConfig),
     ProductCategoryModule,
+    CommonModule,
   ],
   controllers: [AppController],
-  providers: [AppService, S3Service],
+  providers: [AppService],
 })
 export class AppModule { }
