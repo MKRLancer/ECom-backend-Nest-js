@@ -53,6 +53,7 @@ export class ProductCategoryService {
         `Product Category with this name ${name} already exists`,
       );
     }
+   
     const existingPCategory = await this.productCategoryRepository.preload({
       id: id,
       ...updateProductCategoryDto,

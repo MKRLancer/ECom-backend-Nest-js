@@ -14,9 +14,10 @@ export class ProductCategory {
     @Column({ default: true })
     isActive: boolean;
 
-    @CreateDateColumn()
-    created_at: Date;
+    @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)" })
+    public created_at: Date;
 
-    @UpdateDateColumn()
-    updated_at: Date;
+    @UpdateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)" })
+    public updated_at: Date;
+
 }

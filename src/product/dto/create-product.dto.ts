@@ -1,4 +1,5 @@
-import { IsString, IsNotEmpty, IsOptional } from 'class-validator';
+import { Transform, Type } from 'class-transformer';
+import { IsString, IsNotEmpty, IsOptional, IsNumber, IsNumberString } from 'class-validator';
 
 export class CreateProductDto {
     @IsString()
@@ -8,4 +9,22 @@ export class CreateProductDto {
     @IsString()
     @IsOptional()
     description?: string;
+
+    @IsNotEmpty()
+    @IsNumber()
+    @Transform(({ value }) => parseInt(value, 10))
+    price: number;
+
+    @IsNotEmpty()
+    @IsNumber()
+    @Transform(({ value }) => parseInt(value, 10))
+    quantity: number;
+
+    @IsNotEmpty()
+    @IsNumber()
+    @Transform(({ value }) => parseInt(value, 10))
+    category: number;
+
+    @IsOptional()
+    image: Object
 }

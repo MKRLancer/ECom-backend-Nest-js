@@ -1,5 +1,6 @@
 import { ProductCategory } from 'src/product-category/entities/product-category.entity';
-import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne, CreateDateColumn, UpdateDateColumn, Timestamp } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, OneToOne, CreateDateColumn, UpdateDateColumn, BeforeInsert, ManyToOne } from 'typeorm';
+import { ImageDetails } from '../types/ImageDeatails.type';
 
 @Entity({ name: 'products' })
 export class Product {
@@ -9,22 +10,24 @@ export class Product {
     @Column({ unique: true, nullable: false })
     name: string;
 
-    @Column()
+    @Column({ unique: true, nullable: true })
     slug: string
 
-    @Column()
+    @Column({ nullable: true })
     description: string
 
     @Column({ nullable: false })
     price: number
 
-    @Column({ nullable: false })
-    image: number
+    @Column({ nullable: false, type: 'json' })
+    image: ImageDetails
 
     @Column({ nullable: false })
     quantity: number
 
-    @OneToOne(() => ProductCategory)
+    @ManyToOne(() => ProductCategory, {
+        eager: true,
+    })
     @JoinColumn()
     category: ProductCategory;
 
@@ -32,9 +35,14 @@ export class Product {
     isActive: boolean;
 
     @CreateDateColumn()
-    created_at: Date;
+    public created_at: Date;
 
     @UpdateDateColumn()
-    updated_at: Date;
+    public updated_at: Date;
+
+    @BeforeInsert()
+    generateSlug() {
+        this.slug = this.name.split(" ").join("-");
+    }
 }
 

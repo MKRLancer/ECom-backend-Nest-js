@@ -13,7 +13,7 @@ export const databaseConfig: TypeOrmModuleAsyncOptions = {
             database: process.env.DB_NAME,
             password: process.env.DB_PASSWORD.toString(),
             entities: [__dirname + '/../**/*.entity.{js,ts}'],
-            synchronize: false,
+            synchronize: true,
             logging: Boolean(process.env.DB_LOGGING),
         };
     }
