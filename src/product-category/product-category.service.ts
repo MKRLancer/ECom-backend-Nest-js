@@ -8,6 +8,8 @@ import { Repository } from 'typeorm';
 import { CreateProductCategoryDto } from './dto/create-product-category.dto';
 import { UpdateProductCategoryDto } from './dto/update-product-category.dto';
 import { ProductCategory } from './entities/product-category.entity';
+import { PaginationDto } from './../common/dto/pagination.dto/pagination.dto';
+import { skip } from 'rxjs';
 
 @Injectable()
 export class ProductCategoryService {
@@ -29,8 +31,11 @@ export class ProductCategoryService {
     return this.productCategoryRepository.save(createProductCategoryDto);
   }
 
-  findAll() {
+  findAll(paginationQuery: PaginationDto) {
+    const { offset, limit } = paginationQuery;
     return this.productCategoryRepository.find({
+      skip: offset,
+      take: limit,
       order: {
         created_at: 'desc'
       }
@@ -53,7 +58,7 @@ export class ProductCategoryService {
         `Product Category with this name ${name} already exists`,
       );
     }
-   
+
     const existingPCategory = await this.productCategoryRepository.preload({
       id: id,
       ...updateProductCategoryDto,

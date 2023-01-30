@@ -14,11 +14,13 @@ import {
   UsePipes,
   ValidationPipe,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { PaginationDto } from 'src/common/dto/pagination.dto/pagination.dto';
 
 @Controller('product')
 export class ProductController {
@@ -45,8 +47,8 @@ export class ProductController {
   }
 
   @Get()
-  findAll() {
-    return this.productService.findAll();
+  findAll(@Query() paginationQuery: PaginationDto) {
+    return this.productService.findAll(paginationQuery);
   }
 
   @Get(':id')
