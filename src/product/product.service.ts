@@ -72,6 +72,25 @@ export class ProductService {
     return product;
   }
 
+  async updateImage(id: number, image: Express.Multer.File) {
+    const product = await this.productRepoistory.findOne({
+      where: {
+        id
+      }
+    });
+    if (!product) {
+      throw new NotFoundException('Product does not found');
+    }
+    let imageUpload: ImageDetails = await this.s3UploadService.uploadToS3(
+      image.buffer,
+      image.originalname,
+    );
+
+    product.image = { ...imageUpload };
+    return this.productRepoistory.save(product);
+  }
+
+
   async update(id: number, updateProductDto: UpdateProductDto) {
 
     const product = await this.productRepoistory.findOne({

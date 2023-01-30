@@ -13,6 +13,7 @@ import {
   ParseIntPipe,
   UsePipes,
   ValidationPipe,
+  Put,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -56,6 +57,12 @@ export class ProductController {
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateProductDto: UpdateProductDto) {
     return this.productService.update(+id, updateProductDto);
+  }
+
+  @Put('updateImage/:id')
+  @UseInterceptors(FileInterceptor('image'))
+  async updateImage(@Param('id') id: string, @UploadedFile() image: Express.Multer.File) {
+    return this.productService.updateImage(+id, image);
   }
 
   @Delete(':id')
