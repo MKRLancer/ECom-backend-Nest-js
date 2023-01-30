@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, Query } from '@nestjs/common';
 import { ProductCategoryService } from './product-category.service';
 import { CreateProductCategoryDto } from './dto/create-product-category.dto';
 import { UpdateProductCategoryDto } from './dto/update-product-category.dto';
 import { ProductCategory } from './entities/product-category.entity';
+import { PaginationDto } from 'src/common/dto/pagination.dto/pagination.dto';
 
 @Controller('product-category')
 export class ProductCategoryController {
@@ -15,8 +16,8 @@ export class ProductCategoryController {
   }
 
   @Get()
-  findAll() {
-    return this.productCategoryService.findAll();
+  findAll(@Query() paginationQuery: PaginationDto) {
+    return this.productCategoryService.findAll(paginationQuery);
   }
 
   @Get(':id')

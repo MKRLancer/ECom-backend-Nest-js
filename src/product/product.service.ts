@@ -7,6 +7,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { Product } from './entities/product.entity';
 import { ImageDetails } from './types/ImageDeatails.type';
 import { ProductCategoryService } from 'src/product-category/product-category.service';
+import { PaginationDto } from 'src/common/dto/pagination.dto/pagination.dto';
 
 @Injectable()
 export class ProductService {
@@ -56,8 +57,12 @@ export class ProductService {
     return this.productRepoistory.save({ ...productData });
   }
 
-  findAll() {
-    return this.productRepoistory.find();
+  findAll(paginationQuery: PaginationDto) {
+    const { offset, limit } = paginationQuery;
+    return this.productRepoistory.find({
+      skip: offset,
+      take: limit
+    });
   }
 
   async findOne(id: number) {
