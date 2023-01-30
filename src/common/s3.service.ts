@@ -19,8 +19,15 @@ export class S3Service {
         };
     }
 
-    async deleteS3Resource(key:string,){
-        
+    async deleteS3Resource(key: string,) {
+        const bucketS3 = process.env.AWS_S3_BUCKET_NAME;
+        const s3 = this.getS3Bucket();
+        const params = {
+            Bucket: bucketS3,
+            Key: key,
+        };
+        const isDeleted = await s3.deleteObject(params).promise();
+        return isDeleted;
     }
 
     getS3Bucket() {

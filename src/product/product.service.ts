@@ -85,7 +85,10 @@ export class ProductService {
       image.buffer,
       image.originalname,
     );
-
+    if (imageUpload) {
+      //delete the old image
+      this.s3UploadService.deleteS3Resource(product.image.key);
+    }
     product.image = { ...imageUpload };
     return this.productRepoistory.save(product);
   }
